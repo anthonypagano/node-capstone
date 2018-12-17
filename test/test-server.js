@@ -7,7 +7,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe("Shopping List", function() {
+describe("Do I Have That Album app", function() {
   before(function() {
     return runServer();
   });
@@ -16,7 +16,7 @@ describe("Shopping List", function() {
     return closeServer();
   });
 
-  it("should return html", function() {
+  it("should return index html", function() {
     return chai
       .request(app)
       .get("/")

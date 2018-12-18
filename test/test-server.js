@@ -25,4 +25,24 @@ describe("Do I Have That Album app", function() {
         expect(res).to.be.html;
       });
   });
+
+  it("should return add-album html", function() {
+    return chai
+      .request(app)
+      .get("/add-album.html")
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res).to.be.html;
+      });
+  });
+  
+  it("should return update-album html", function() {
+    return chai
+      .request(app)
+      .get("/update-album.html")
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res).to.be.html;
+      });
+  }); 
 });

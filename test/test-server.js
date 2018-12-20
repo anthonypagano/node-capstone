@@ -1,10 +1,12 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const mongoose = require('mongoose');
 
+const {Album} = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {DATABASE_URL} = require('../config');
 
-const expect = chai.expect;
+const expect = chai.should();
 
 chai.use(chaiHttp);
 
@@ -21,9 +23,9 @@ describe("Do I Have That Album app", function() {
     return chai
       .request(app)
       .get("/")
-      .then(function(res) {
-        expect(res).to.have.status(200);
-        expect(res).to.be.html;
+      .then(res => {
+        res.should.have.status(200);
+        res.should.be.html;
       });
   });
 
@@ -31,9 +33,9 @@ describe("Do I Have That Album app", function() {
     return chai
       .request(app)
       .get("/add-album.html")
-      .then(function(res) {
-        expect(res).to.have.status(200);
-        expect(res).to.be.html;
+      .then(res => {
+        res.should.have.status(200);
+        res.should.be.html;
       });
   });
   
@@ -41,9 +43,30 @@ describe("Do I Have That Album app", function() {
     return chai
       .request(app)
       .get("/update-album.html")
-      .then(function(res) {
-        expect(res).to.have.status(200);
-        expect(res).to.be.html;
+      .then(res => {
+        res.should.have.status(200);
+        res.should.be.html;
       });
   }); 
+
+  describe('DELETE endpoint', function() {
+    it('delete an album by id', function() {
+
+    let album;
+
+    return Album
+        .findOne()
+        .then(_album => {
+        album = _album;
+        return chai.request(app).delete(`/albums/${album.id}`);
+        })
+        .then(res => {
+        res.should.have.status(204);
+        return Album.findById(album.id);
+        })
+        .then(_album => {
+        should.not.exist(_album);
+        });
+    });
+  });
 });

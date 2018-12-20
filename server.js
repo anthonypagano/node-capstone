@@ -70,11 +70,11 @@ app.get('/band/:bandName', (req, res) => {
     });
 
 //get a list of all band names to populate landing page dropdown list from
-app.get('/all-bands', (req, res) => {
+app.get('/bands', (req, res) => {
     Album
         .distinct("bandName").sort()
         .then(albums => {
-            res.json(albums.bandName);
+            res.json(albums);
         })
         .catch(err => {
             console.error(err);

@@ -1,7 +1,8 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 
-const { app, runServer, closeServer } = require("../server");
+const {app, runServer, closeServer} = require('../server');
+const {DATABASE_URL} = require('../config');
 
 const expect = chai.expect;
 
@@ -9,7 +10,7 @@ chai.use(chaiHttp);
 
 describe("Do I Have That Album app", function() {
   before(function() {
-    return runServer();
+    return runServer(DATABASE_URL);
   });
 
   after(function() {

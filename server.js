@@ -155,9 +155,9 @@ let server;
 // this function starts our server and returns a Promise.
 // In our test code, we need a way of asynchronously starting
 // our server, since we'll be dealing with promises there.
-function runServer(databaseUrl, port = PORT) {
+function runServer(DATABASE_URL, port = PORT) {
     return new Promise((resolve, reject) => {
-      mongoose.connect(databaseUrl, err => {
+      mongoose.connect(DATABASE_URL, err => {
         if (err) {
           return reject(err);
         }

@@ -51,7 +51,7 @@ describe("Do I Have That Album app", function() {
 
   describe('GET endpoint', function() {
 
-    it('should return all albums', function() {
+    /*it('should return all albums', function() {
       let res;
       return chai.request(app)
         .get('/albums')
@@ -95,7 +95,7 @@ describe("Do I Have That Album app", function() {
         });
     });
 
-    /*it('should return 5 most recent albums', function() {
+    it('should return 5 most recent albums', function() {
         let res;
         return chai.request(app)
           .get('/recent')

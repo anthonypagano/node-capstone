@@ -95,7 +95,7 @@ describe("Do I Have That Album app", function() {
         });
     });
 
-    it('should return 5 most recent albums', function() {
+    /*it('should return 5 most recent albums', function() {
         let res;
         return chai.request(app)
           .get('/recent')
@@ -127,7 +127,7 @@ describe("Do I Have That Album app", function() {
             res = _res;
             res.should.have.status(200);
           })
-      });      
+      }); */      
     });  
 
   describe('POST endpoint', function() {

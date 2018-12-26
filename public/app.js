@@ -100,7 +100,67 @@ function displayBandsAlbums(data) {
     <li>${result.releaseYear}</li>
     <li>${result.format}</li>
     <li>${result.notes}</li>         
-    <li></li>
+    <li><button class="remove-album" value="${result.id}">Remove</button></li>
     </ul>
     `;
   }
+
+// function to take selected band and hit end point to return
+// all albums from that band in the db
+function deleteAnAlbum(albumToRemove) {
+    return `http://localhost:8080/albums/${albumToRemove}`;
+  }
+
+  // Watches for any clicks on a Remove button
+  $(document).on('click','.remove-album',function(){
+        event.preventDefault();
+        albumIdToRemove = this.value;
+        albumToDelete(albumIdToRemove);
+    });
+
+// Calls function to delete an album end point and on
+// success re-loads the bands list of albums that remain
+function albumToDelete(albumToRemove) {
+    const deletedAlbums = {
+      url: deleteAnAlbum(albumToRemove),
+      dataType: 'json',
+      type: 'DELETE',
+      success: function(){
+        getAlbumsFromSelectedBand($('.band-list').val())
+      } 
+    };
+    $.ajax(deletedAlbums);
+}
+
+// Watches for any clicks on a Remove button
+function watchAddAlbumButton() {
+    $('.js-add-album-button').click(event => {
+        event.preventDefault();
+        //const bandName = $('.js-search-form').find('#bandName').val();
+        //const albumName = $('.js-search-form').find('#albumName').val();
+        //const releaseYear = $('.js-search-form').find('#releaseYear').val();
+        //const format = $('.js-search-form').find('#format').val();
+        //const notes = $('.js-search-form').find('#notes').val();
+        var newAlbumArray = $('.newAlbumInfo').map(function() {
+            return $(this).val();
+        }).toArray();    
+        postNewAlbum(newAlbumArray)
+    });
+  }
+
+  $(document).ready(
+    watchAddAlbumButton()
+  );
+
+  function postNewAlbum(newAlbumArray) {
+    const newAlbum = {
+      url: 'http://localhost:8080/albums',
+      data: newAlbumArray,
+      dataType: 'json',
+      type: 'POST',
+      success: console.log(newAlbumArray)
+    };
+  
+    $.ajax(newAlbum);
+  }
+  

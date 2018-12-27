@@ -132,6 +132,10 @@ function albumToDelete(albumToRemove) {
     $.ajax(deletedAlbums);
 }
 
+function AddAnAlbum() {
+    return `http://localhost:8080/albums`;
+  }
+
 // Watches for any clicks on a Remove button
 function watchAddAlbumButton() {
     $('.js-add-album-button').click(event => {
@@ -154,13 +158,20 @@ function watchAddAlbumButton() {
 
   function postNewAlbum(newAlbumArray) {
     const newAlbum = {
-      url: 'http://localhost:8080/albums',
-      data: newAlbumArray,
+      url: AddAnAlbum(),
+      data: {
+          bandName : newAlbumArray[0],
+          albumName : newAlbumArray[1],
+          releaseYear : newAlbumArray[2],
+          format : newAlbumArray[3],                    
+          notes : newAlbumArray[4]
+        },
       dataType: 'json',
       type: 'POST',
-      success: console.log(newAlbumArray)
+      success: console.log('yes')
     };
-  
     $.ajax(newAlbum);
-  }
+    console.log(newAlbum);
+
+}
   

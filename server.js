@@ -84,6 +84,7 @@ app.get('/bands', (req, res) => {
 
 //add a new album to the db
 app.post('/albums', (req, res) => {
+    console.log(req);
     const requiredFields = ['bandName', 'albumName', 'releaseYear', 'format'];
     for (let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i];

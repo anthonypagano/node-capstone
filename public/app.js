@@ -3,12 +3,6 @@
 const ALL_BANDS_LIST = '/bands';
 const ADD_AN_ALBUM = '/albums';
   
-// this function's name and argument can stay the
-// same after we have a live API, but its internal
-// implementation will change. Instead of using a
-// timeout function that returns mock data, it will
-// use jQuery's AJAX functionality to make a call
-// to the server and then run the callbackFn
 // initial call to /bands endpoint which returns
 // names of all bands in the db that I have an 
 // album for
@@ -23,8 +17,6 @@ function getBandList(callback) {
     $.ajax(bandList);
 }
 
-// this function stays the same when we connect
-// to real API later
 // creates an option in the band select list for
 // each band that is returned from the /bands endpoint
 function displayBandList(band) {
@@ -34,8 +26,6 @@ function displayBandList(band) {
     });
 }
 
-// this function can stay the same even when we
-// are connecting to real API
 // function that calls the /bands endpoint
 // and then on call back loads the select list
 // with the data
@@ -43,10 +33,8 @@ function getAndDisplayBandList() {
 	getBandList(displayBandList);
 }
 
-//  on page load do this
-//  when the page loads execute the function to
-//  call the api and load data into the dropdown
-//  list
+//  on page load call the api and load data 
+//  into the dropdown list
 $(function() {
 	getAndDisplayBandList();
 })
@@ -150,14 +138,9 @@ function albumToDelete(albumToRemove) {
   function watchAddAlbumButton() {
     $('.js-add-album-button').click(event => {
         event.preventDefault();
-        //const bandName = $('.js-search-form').find('#bandName').val();
-        //const albumName = $('.js-search-form').find('#albumName').val();
-        //const releaseYear = $('.js-search-form').find('#releaseYear').val();
-        //const format = $('.js-search-form').find('#format').val();
-        //const notes = $('.js-search-form').find('#notes').val();
         var newAlbumArray = $('.newAlbumInfo').map(function() {
             return $(this).val();
-        }).toArray();    
+        })
         postNewAlbum(newAlbumArray)
     });
   }
@@ -169,21 +152,24 @@ function albumToDelete(albumToRemove) {
 
   // posts new album info to db
   function postNewAlbum(newAlbumArray) {
-    const newAlbum = {
-      url: ADD_AN_ALBUM,
-      data: {
-          bandName : newAlbumArray[0],
-          albumName : newAlbumArray[1],
-          releaseYear : newAlbumArray[2],
-          format : newAlbumArray[3],                    
-          notes : newAlbumArray[4]
+    $.ajax({
+        type: 'POST',
+        url: ADD_AN_ALBUM,
+        data: JSON.stringify({
+            "bandName": newAlbumArray[0],
+            "albumName" : newAlbumArray[1],
+            "releaseYear" : newAlbumArray[2],
+            "format" : newAlbumArray[3],
+            "notes" : newAlbumArray[4]
+        }),
+        success: function(){
+            getAlbumsFromSelectedBand(newAlbumArray[0])
+        },         
+        error: function(e) {
+          console.log(e);
         },
-      dataType: 'json',
-      type: 'POST',
-      contentType: 'application/json',
-      success: console.log('yes')
-    };
-    $.ajax(newAlbum);
-    console.log(newAlbum);
+        dataType: "json",
+        contentType: "application/json"
+      });
 }
   

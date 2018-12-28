@@ -1,5 +1,7 @@
+'use strict';
 
-const ALL_BANDS_LIST = 'http://localhost:8080/bands';
+const ALL_BANDS_LIST = '/bands';
+const ADD_AN_ALBUM = '/albums';
   
 // this function's name and argument can stay the
 // same after we have a live API, but its internal
@@ -67,7 +69,7 @@ function watchBandSelection() {
 // function to take selected band and hit end point to return
 // all albums from that band in the db
 function getAlbumsForDisplay(bandChosen) {
-    return `http://localhost:8080/band/${bandChosen}`;
+    return `/band/${bandChosen}`;
   }
 
 // Calls function to hit band specific album end point
@@ -95,12 +97,13 @@ function displayBandsAlbums(data) {
   function renderAlbums(result) {
     return `
     <ul>
-    <li>${result.bandName}</li>
-    <li>${result.albumName}</li>
-    <li>${result.releaseYear}</li>
-    <li>${result.format}</li>
-    <li>${result.notes}</li>         
-    <li><button class="remove-album" value="${result.id}">Remove</button></li>
+    <li class="band-name">${result.bandName}</li>
+    <li class="album-name">${result.albumName}</li>
+    <li class="release-year">${result.releaseYear}</li>
+    <li class="format">${result.format}</li>
+    <li class="notes">${result.notes}</li>         
+    <li class="remove-update-buttons"><button class="remove-album" value="${result.id}">Remove</button></li>
+    <li class="remove-update-buttons"><button class="update-album" value="${result.id}">Update</button></li>
     </ul>
     `;
   }
@@ -108,13 +111,13 @@ function displayBandsAlbums(data) {
 // function to take selected band and hit end point to return
 // all albums from that band in the db
 function deleteAnAlbum(albumToRemove) {
-    return `http://localhost:8080/albums/${albumToRemove}`;
+    return `/albums/${albumToRemove}`;
   }
 
   // Watches for any clicks on a Remove button
   $(document).on('click','.remove-album',function(){
         event.preventDefault();
-        albumIdToRemove = this.value;
+        var albumIdToRemove = this.value;
         albumToDelete(albumIdToRemove);
     });
 
@@ -132,12 +135,19 @@ function albumToDelete(albumToRemove) {
     $.ajax(deletedAlbums);
 }
 
-function AddAnAlbum() {
-    return `http://localhost:8080/albums`;
+  // Watches for any clicks on Add New Album Toggle button
+  $(document).ready(
+    watchAddAlbumToggleButton()
+  );
+
+  function watchAddAlbumToggleButton() {
+    $('.add-new-album-toggle').click(event => {
+        $(".add-album-fieldset").toggle();
+    });
   }
 
-// Watches for any clicks on a Remove button
-function watchAddAlbumButton() {
+  // collects new album info from form and calls function to post
+  function watchAddAlbumButton() {
     $('.js-add-album-button').click(event => {
         event.preventDefault();
         //const bandName = $('.js-search-form').find('#bandName').val();
@@ -152,13 +162,15 @@ function watchAddAlbumButton() {
     });
   }
 
+  // Watches for any clicks on Add An Album button
   $(document).ready(
     watchAddAlbumButton()
   );
 
+  // posts new album info to db
   function postNewAlbum(newAlbumArray) {
     const newAlbum = {
-      url: AddAnAlbum(),
+      url: ADD_AN_ALBUM,
       data: {
           bandName : newAlbumArray[0],
           albumName : newAlbumArray[1],
@@ -168,10 +180,10 @@ function watchAddAlbumButton() {
         },
       dataType: 'json',
       type: 'POST',
+      contentType: 'application/json',
       success: console.log('yes')
     };
     $.ajax(newAlbum);
     console.log(newAlbum);
-
 }
   

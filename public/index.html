@@ -8,26 +8,29 @@
   </head>
   <body>
      <header role="banner">
-      <h1>Do I Have That Album Already?</h1>
-      <p class="intro-copy"></p>
+      <h1>Do I Have That Album?</h1>
+      <p class="intro-copy">An app to keep track of the albums I own by any band and add NEW ones!</p>
     </header>      
     <main role="main">   
       <form action="#" class="js-search-form" role="search">
-        <fieldset>
+        <fieldset class="band-list-fieldset">
           <legend>Do I Have That Album Already?</legend>
-          <label for="ingredients">Choose a band from the list to see if you have an a specific album from them already.</label>
-          <select class="band-list" aria-label="band selection"></select>
+          <label for="band-list">Choose a band from the list to see if you have a specific album from them already.</label>
+          <select id="band-list" class="band-list" aria-label="band selection"></select><br />
+          <input type="button" class="add-new-album-toggle" value="Add A New Album">                 
+        </fieldset>
+        <fieldset class="add-album-fieldset">
           <label for="bandName">Band Name:</label>
           <input type="text" id="bandName" value="" class="newAlbumInfo" aria-label="add band name input" required>
           <label for="albumName">Album Name:</label>
           <input type="text" id="albumName" value="" class="newAlbumInfo" aria-label="add album name input" required>
-          <label for="releaseYear">Release Year</label>
+          <label for="releaseYear">Release Year:</label>
           <input type="text" id="releaseYear" value="" class="newAlbumInfo" aria-label="add release year input" required>
-          <label for="format">Album Format</label>
+          <label for="format">Album Format:</label>
           <input type="text" id="format" value="" class="newAlbumInfo" aria-label="add album format input" required>
-          <label for="notes">Notes</label>
+          <label for="notes">Notes:</label>
           <input type="text" id="notes" value="" class="newAlbumInfo" aria-label="add notes about the album input">
-          <input type="button" class="js-add-album-button" value="Add The Album">          
+          <input type="button" class="js-add-album-button" value="Add The Album">                  
         </fieldset>
       </form>    
       <section class="js-search-results" aria-live="assertive">

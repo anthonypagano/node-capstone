@@ -14,6 +14,27 @@ body {
   color: #000000;
 }
 
+header {
+  max-width: 750px;
+  margin: 0px auto;
+  text-align: center;
+}
+
+.intro-copy {
+  font-size: 18px;
+  margin-top: 20px;
+  line-height: 22px;
+}
+
+h1 {
+  padding: 20px 0 0 0;
+}
+
+.band-list-fieldset {
+  margin: 15px 0;
+  text-align: center;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -23,13 +44,11 @@ ul {
 
 li {
     display: inline-flex;
-    width: 20%;
+    margin: 0 0 5px 0;
 }
 main {
   width: 100%;
-  margin: 0px auto;
-  text-align: center;
-}
+ }
 
 fieldset {
   border: none;
@@ -39,10 +58,66 @@ legend {
   display: none;
 }
 
-@media only screen and (max-width: 768px) {
-    
+.add-new-album-toggle {
+  margin: 15px 0 0 0;
 }
 
-@media only screen and (max-width: 650px) {
+.add-album-fieldset {
+  display: none;
+  width: 175px;
+  margin: 20px auto 0 auto;
+}
+
+.newAlbumInfo {
+  margin: 0 0 10px 0;
+}
+
+.js-add-album-button{
+  margin: 0 0 15px 0;  
+}
+
+.js-search-results {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.band-name {
+  min-width: 200px;
+}
+
+.album-name {
+  min-width: 200px;  
+}
+
+.format {
+  min-width: 100px;  
+}
+
+.release-year {
+  min-width: 100px;    
+}
+
+.notes {
+  min-width: 300px;  
+}
+
+.remove-update-buttons {
+  min-width: 75px;  
+}
+@media only screen and (max-width: 1099px) {
+  ul {
+    list-style-type: none;
+    margin: 0 auto 10px;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 11px;
+}
   
+li {
+      display: block;
+      margin: 0 auto 5px auto;
+      text-align: left;
+      width: 300px;      
+    }
 }

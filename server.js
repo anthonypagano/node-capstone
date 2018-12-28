@@ -93,7 +93,7 @@ app.post('/albums', (req, res) => {
         return res.status(400).send(message);
       }
     }
-  
+
     Album
       .create({
         bandName: req.body.bandName,

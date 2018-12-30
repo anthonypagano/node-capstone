@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const { TEST_DATABASE_URL, PORT } = require('./config');
+const { DATABASE_URL, PORT } = require('./config');
 const { Album } = require('./models');
 
 const app = express();
@@ -84,7 +84,8 @@ app.get('/bands', (req, res) => {
 
 //add a new album to the db
 app.post('/albums', (req, res) => {
-    const requiredFields = ['bandName', 'albumName', 'releaseYear', 'format'];
+    console.log(req);
+    const requiredFields = ['bandName', 'albumName', 'releaseYear', 'format', 'notes'];
     for (let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i];
       if (!(field in req.body)) {
@@ -93,7 +94,7 @@ app.post('/albums', (req, res) => {
         return res.status(400).send(message);
       }
     }
-  
+
     Album
       .create({
         bandName: req.body.bandName,
@@ -155,9 +156,9 @@ let server;
 // this function starts our server and returns a Promise.
 // In our test code, we need a way of asynchronously starting
 // our server, since we'll be dealing with promises there.
-function runServer(TEST_DATABASE_URL, port = PORT) {
+function runServer(DATABASE_URL, port = PORT) {
     return new Promise((resolve, reject) => {
-      mongoose.connect(TEST_DATABASE_URL, err => {
+      mongoose.connect(DATABASE_URL, err => {
         if (err) {
           return reject(err);
         }
@@ -195,7 +196,7 @@ function closeServer() {
 // if server.js is called directly (aka, with `node server.js`), this block
 // runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
 if (require.main === module) {
-    runServer(TEST_DATABASE_URL).catch(err => console.error(err));
+    runServer(DATABASE_URL).catch(err => console.error(err));
 }
   
 module.exports = { runServer, app, closeServer };

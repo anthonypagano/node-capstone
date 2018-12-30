@@ -29,26 +29,6 @@ describe("Do I Have That Album app", function() {
       });
   });
 
-  it("should return add-album html", function() {
-    return chai
-      .request(app)
-      .get("/add-album.html")
-      .then(res => {
-        res.should.have.status(200);
-        res.should.be.html;
-      });
-  });
-  
-  it("should return update-album html", function() {
-    return chai
-      .request(app)
-      .get("/update-album.html")
-      .then(res => {
-        res.should.have.status(200);
-        res.should.be.html;
-      });
-  }); 
-
   describe('GET endpoint', function() {
 
     it('should return all albums', function() {

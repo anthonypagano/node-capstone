@@ -212,7 +212,7 @@ function displayAlbumToBeUpdated(data) {
 // to real API later
 function renderAlbum(result) {
     return `
-        <ul>
+        <ul class="update-album-list">
             <input type="hidden" class="update-album-info" value="${result[0]}" />
             <li class="band-name"><input type="text" class="update-album-info" id="update-bandName" value="${result[1]}"/></li>
             <li class="album-name"><input type="text" class="update-album-info" id="update-albumName" value="${result[2]}"/></li>

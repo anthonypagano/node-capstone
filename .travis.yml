@@ -9,3 +9,5 @@ deploy:
   app: fast-wildwood-34655
   on:
     repo: anthonypagano/node-capstone
+env:
+  - TEST_DATABASE_URL=mongodb://apagano76:76apagano@ds243254.mlab.com:43254/node-capstone-test

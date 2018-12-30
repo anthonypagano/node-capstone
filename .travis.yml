@@ -11,3 +11,4 @@ deploy:
     repo: anthonypagano/node-capstone
 env:
   - TEST_DATABASE_URL=mongodb://apagano76:76apagano@ds243254.mlab.com:43254/node-capstone-test
+  - DATABASE_URL=mongodb://apagano76:76apagano@ds263138.mlab.com:63138/node-capstone

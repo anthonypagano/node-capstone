@@ -81,31 +81,92 @@ legend {
   text-align: center;
 }
 
+.error-messaging {
+  display: none;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .band-name {
-  min-width: 200px;
+  width: 200px;
 }
 
 .album-name {
-  min-width: 200px;  
+  width: 200px;  
 }
 
 .format {
-  min-width: 100px;  
+  width: 100px;  
 }
 
 .release-year {
-  min-width: 100px;    
+  width: 100px;    
 }
 
 .notes {
-  min-width: 300px;  
+  width: 300px;  
 }
 
 .remove-update-buttons {
   min-width: 75px;  
 }
+
+.update-album-list {
+  margin-left: -35px;
+}
+
+#update-band-name {
+  min-width: 200px;
+}
+
+#update-album-name {
+  min-width: 200px;  
+}
+
+#update-format {
+  width: 100px;  
+}
+
+#update-release-year {
+  width: 100px;    
+}
+
+#update-notes {
+  min-width: 300px;  
+}
+
 @media only screen and (max-width: 1099px) {
-    ul {
+  .band-name {
+    min-width: 200px;
+    margin: 2px 0;
+  }
+  
+  .album-name {
+    min-width: 200px;  
+    margin: 2px 0;
+  }
+  
+  .format {
+    min-width: 100px;  
+    margin: 2px 0;
+  }
+  
+  .release-year {
+    min-width: 100px;    
+    margin: 2px 0;
+  }
+  
+  .notes {
+    min-width: 200px;  
+    margin: 2px 0;
+  }
+ 
+  #update-notes {
+    min-width: 200px;  
+  }
+  ul {
       list-style-type: none;
       margin: 0 auto 10px;
       padding: 10px;
@@ -123,6 +184,7 @@ legend {
 
   .update-album-list {
     border: 0;
+    margin-left: 0;
     padding: 10px 0;
   }
 }

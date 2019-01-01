@@ -33,23 +33,22 @@ function getAndDisplayBandList() {
     getBandList(displayBandList);
 }
 
-//  on page load call the api and load data 
-//  into the dropdown list
+// on page load call the api and load all band 
+// names from the db into the dropdown list
 $(function() {
     getAndDisplayBandList();
 })
 
-// listens to the band select list for a selection and
 // calls the get endpoint to get all the albums by 
-// the selected band name
+// the selected band name from the dropdown list
 function watchBandSelection() {
     $('.band-list').change(function(){
-        event.preventDefault();
         const bandChosen = this.value;
         getAlbumsFromSelectedBand(bandChosen);
     });
 }
 
+// watches for a selection from the band dropdown list
 $(document).ready(
     watchBandSelection()
 );
@@ -60,7 +59,7 @@ function getAlbumsForDisplay(bandChosen) {
     return `/band/${bandChosen}`;
 }
 
-// Calls function to hit band specific album end point
+// calls function to hit band specific album end point
 function getAlbumsFromSelectedBand(bandChosen) {
     const selectedBandsAlbums = {
         url: getAlbumsForDisplay(bandChosen),
@@ -74,14 +73,14 @@ function getAlbumsFromSelectedBand(bandChosen) {
     $.ajax(selectedBandsAlbums);
 }
 
-// Takes album list and maps results through renderAlbums function, 
+// takes album list and maps results through renderAlbums function, 
 // then displays each on page
 function displayBandsAlbums(data) {
     const results = data.map((item, index) => renderAlbums(item));
     $('.js-search-results').html(results);
 }
 
-//Takes each album and display the info 
+// takes each album and displays the info 
 function renderAlbums(result) {
     return `
         <ul class="${result.id}">
@@ -102,14 +101,13 @@ function deleteAnAlbum(albumToRemove) {
     return `/albums/${albumToRemove}`;
 }
 
-// Watches for any clicks on a Remove button
+// watches for any clicks on a Remove button
 $(document).on('click','.remove-album',function(){
-    event.preventDefault();
     var albumIdToRemove = this.value;
     albumToDelete(albumIdToRemove);
 });
 
-// Calls function to delete an album end point and on
+// calls function to delete an album end point and on
 // success re-loads the bands list of albums that remain
 function albumToDelete(albumToRemove) {
     const deletedAlbums = {
@@ -123,11 +121,12 @@ function albumToDelete(albumToRemove) {
     $.ajax(deletedAlbums);
 }
 
-// Watches for any clicks on Add New Album Toggle button
+// watches for any clicks on Add New Album Toggle button
 $(document).ready(
     watchAddAlbumToggleButton()
 );
 
+// function to toggle open and close the add new album form
 function watchAddAlbumToggleButton() {
     $('.add-new-album-toggle').click(event => {
         $(".add-album-fieldset").toggle();
@@ -138,14 +137,28 @@ function watchAddAlbumToggleButton() {
 function watchAddAlbumButton() {
     $('.js-add-album-button').click(event => {
         event.preventDefault();
-        var newAlbumArray = $('.newAlbumInfo').map(function() {
-            return $(this).val();
-        })
-    postNewAlbum(newAlbumArray)
+        if (($('#bandName').val() === "") || ($('#albumName').val() === "") ||
+            ($('#releaseYear').val() === "") || ($('#format').val() === "") ||
+            ($('#notes').val() === "")) {
+                let errorMessage = "Please fill out all fields";
+                $(".error-messaging").show().html(errorMessage);
+        } else {
+            $(".error-messaging").hide()
+            var newAlbumArray = $('.newAlbumInfo').map(function() {
+                return $(this).val();
+            })
+            postNewAlbum(newAlbumArray)
+            $('#bandName').val("");
+            $('#albumName').val("");
+            $('#releaseYear').val("");
+            $('#format').val("");
+            $('#notes').val("");
+            $(".add-album-fieldset").hide();   
+        }
     });
 }
 
-// Watches for any clicks on Add An Album button
+// watches for any clicks on Add An Album button
 $(document).ready(
     watchAddAlbumButton()
 );
@@ -173,14 +186,13 @@ function postNewAlbum(newAlbumArray) {
     });
 }
 
-// Watches for any clicks on any update album button
+// watches for any clicks on any update album button
 $(document).on('click','.update-album',function(){
-    event.preventDefault();
     var albumIdToUpdate = this.value;
     getAlbumToUpdate(albumIdToUpdate);
 });
 
-// Calls function to get album to be updated end point
+// calls function to get album to be updated end point
 function getAlbumToUpdate(albumIdToUpdate) {
     const selectedAlbum = {
         url: getAlbumToBeUpdated(albumIdToUpdate),
@@ -200,7 +212,7 @@ function getAlbumToBeUpdated(albumIdToUpdate) {
     return `/albums/${albumIdToUpdate}`;
 }
 
-// Takes album list and maps results through renderAlbums function, 
+// takes album list and maps results through renderAlbums function, 
 // then displays each on page
 function displayAlbumToBeUpdated(data) {
     let albumId = data[0];
@@ -208,29 +220,42 @@ function displayAlbumToBeUpdated(data) {
     $('.'+ albumId).append(results);
 }  
 
-// this function stays the same when we connect
-// to real API later
+// displays form fields with specific album info to be updated
 function renderAlbum(result) {
     return `
         <ul class="update-album-list">
             <input type="hidden" class="update-album-info" value="${result[0]}" />
-            <li class="band-name"><input type="text" class="update-album-info" id="update-bandName" value="${result[1]}"/></li>
-            <li class="album-name"><input type="text" class="update-album-info" id="update-albumName" value="${result[2]}"/></li>
-            <li class="release-year"><input type="text" class="update-album-info" id="update-release-year" value="${result[3]}"/></li>
-            <li class="format"><input type="text" class="update-album-info" id="update-format" value="${result[4]}"/></li>
-            <li class="notes"><input type="text" class="update-album-info" id="update-notes" value="${result[5]}"/></li>
-            <li class="save-button"><button class="save-album" value="${result[0]}">SAVE</button></li>
+            <li><input type="text" class="update-album-info" id="update-band-name" value="${result[1]}"/></li>
+            <li><input type="text" class="update-album-info" id="update-album-name" value="${result[2]}"/></li>
+            <li><input type="text" class="update-album-info" id="update-release-year" value="${result[3]}"/></li>
+            <li><input type="text" class="update-album-info" id="update-format" value="${result[4]}"/></li>
+            <li><input type="text" class="update-album-info" id="update-notes" value="${result[5]}"/></li>
+            <li class="save-button"><button class="save-album" value="${result[0]}">Save</button></li>
+            <li class="cancel-button"><button class="cancel-album" value="${result[0]}">Cancel</button></li>
         </ul>
     `;
 }
 
-// Watches for any clicks on save button
+// watches for any clicks on save button and sends
+// updated info to put end point function
 $(document).on('click','.save-album',function(){
-    event.preventDefault();
-    var updatedAlbumArray = $('.update-album-info').map(function() {
-        return $(this).val();
-    })
-    putUpdatedAlbum(updatedAlbumArray)
+        if (($('#update-band-name').val() === "") || ($('#update-album-name').val() === "") ||
+            ($('#update-release-year').val() === "") || ($('#update-format').val() === "") ||
+            ($('#update-notes').val() === "")) {
+                let errorMessage = "Please fill out all fields";
+                $(".error-messaging").show().html(errorMessage);
+        } else {
+            $(".error-messaging").hide()
+            var updatedAlbumArray = $('.update-album-info').map(function() {
+                return $(this).val();
+            })
+            putUpdatedAlbum(updatedAlbumArray)
+        }
+});
+
+// watches for any clicks on cancel button
+$(document).on('click','.cancel-album',function(){
+    $('.update-album-list').hide();
 });
 
 // updates specific album info

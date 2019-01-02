@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const {Album} = require('../models');
 const {app, runServer, closeServer} = require('../server');
-const {DATABASE_URL} = require('../config');
+const {TEST_DATABASE_URL} = require('../config');
 
 const expect = chai.should();
 
@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 describe("Do I Have That Album app", function() {
   before(function() {
-    return runServer(DATABASE_URL);
+    return runServer(TEST_DATABASE_URL);
   });
 
   after(function() {

@@ -51,7 +51,7 @@ function getRecentUpdates(callback) {
         type: 'GET',
         success: function(data) { 
             let recentUpdateList = Object.values(data);
-            displayRecentUpdates(recentUpdateList); 
+            displayRecentUpdates(recentUpdateList);
         }
     };
  
@@ -74,13 +74,13 @@ function displayRecentUpdates(data) {
 function renderRecentUpdates(result) {
     return `
         <section>
-        <ul>
-            <li class="band-name">${result.bandName}</li>
-            <li class="album-name">${result.albumName}</li>
-            <li class="release-year">${result.releaseYear}</li>
-            <li class="format">${result.format}</li>
-            <li class="notes">${result.notes}</li>         
-        </ul>
+            <ul>
+                <li class="band-name">${result.bandName}</li>
+                <li class="album-name">${result.albumName}</li>
+                <li class="release-year">${result.releaseYear}</li>
+                <li class="format">${result.format}</li>
+                <li class="notes">${result.notes}</li>
+            </ul>
         </section>
     `;
 }
@@ -97,9 +97,9 @@ function getAlbumsFromSelectedBand(bandChosen) {
         url: getAlbumsForDisplay(bandChosen),
         dataType: 'json',
         type: 'GET',
-        success: function(data) { 
+        success: function(data) {
             let selectedBandsAlbumsList = Object.values(data);
-            displayBandsAlbums(selectedBandsAlbumsList); 
+            displayBandsAlbums(selectedBandsAlbumsList);
         }
     };
     $.ajax(selectedBandsAlbums);
@@ -110,6 +110,7 @@ function getAlbumsFromSelectedBand(bandChosen) {
 function displayBandsAlbums(data) {
     const results = data.map((item, index) => renderAlbums(item));
     $('.js-search-results').html(results);
+    $('.record-store').hide()
 }
 
 // takes each album and displays the info 
@@ -120,7 +121,7 @@ function renderAlbums(result) {
             <li class="album-name">${result.albumName}</li>
             <li class="release-year">${result.releaseYear}</li>
             <li class="format">${result.format}</li>
-            <li class="notes">${result.notes}</li>         
+            <li class="notes">${result.notes}</li>
             <li class="remove-update-buttons"><button class="remove-album" value="${result.id}">Remove</button></li>
             <li class="remove-update-buttons"><button class="update-album" value="${result.id}">Update</button></li>
         </ul>
@@ -148,7 +149,7 @@ function albumToDelete(albumToRemove) {
         type: 'DELETE',
         success: function(){
             getAlbumsFromSelectedBand($('.band-list').val())
-        } 
+        }
     };
     $.ajax(deletedAlbums);
 }
@@ -157,6 +158,7 @@ function albumToDelete(albumToRemove) {
 function watchAddAlbumToggleButton() {
     $('.add-new-album-toggle').click(event => {
         $(".add-album-fieldset").toggle();
+        $(".error-messaging").hide();
     });
 }
 
@@ -180,7 +182,7 @@ function watchAddAlbumButton() {
             $('#releaseYear').val("");
             $('#format').val("");
             $('#notes').val("");
-            $(".add-album-fieldset").hide();   
+            $(".add-album-fieldset").hide();
         }
     });
 }
@@ -199,7 +201,7 @@ function postNewAlbum(newAlbumArray) {
         }),
         success: function(){
             getAlbumsFromSelectedBand(newAlbumArray[0])
-        },         
+        },
         error: function(e) {
             console.log(e);
         },
@@ -212,6 +214,7 @@ function postNewAlbum(newAlbumArray) {
 $(document).on('click','.update-album',function(){
     var albumIdToUpdate = this.value;
     getAlbumToUpdate(albumIdToUpdate);
+    $(this).prop('disabled', true);
 });
 
 // calls function to get album to be updated end point
@@ -220,13 +223,13 @@ function getAlbumToUpdate(albumIdToUpdate) {
         url: getAlbumToBeUpdated(albumIdToUpdate),
         dataType: 'json',
         type: 'GET',
-        success: function(data) { 
+        success: function(data) {
             let selectedAlbumToUpdate = Object.values(data);
-            displayAlbumToBeUpdated(selectedAlbumToUpdate); 
+            displayAlbumToBeUpdated(selectedAlbumToUpdate);
         }
     };
     $.ajax(selectedAlbum);
-}    
+}
 
 // function to pass album to be updated id to the 
 // get specific album end point
@@ -240,7 +243,7 @@ function displayAlbumToBeUpdated(data) {
     let albumId = data[0];
     const results = renderAlbum(data);
     $('.'+ albumId).append(results);
-}  
+}
 
 // displays form fields with specific album info to be updated
 function renderAlbum(result) {
@@ -261,23 +264,25 @@ function renderAlbum(result) {
 // watches for any clicks on save button and sends
 // updated info to put end point function
 $(document).on('click','.save-album',function(){
-        if (($('#update-band-name').val() === "") || ($('#update-album-name').val() === "") ||
-            ($('#update-release-year').val() === "") || ($('#update-format').val() === "") ||
-            ($('#update-notes').val() === "")) {
-                let errorMessage = "Please fill out all fields";
-                $(".error-messaging").show().html(errorMessage);
-        } else {
-            $(".error-messaging").hide()
-            var updatedAlbumArray = $('.update-album-info').map(function() {
-                return $(this).val();
-            })
-            putUpdatedAlbum(updatedAlbumArray)
-        }
+    if (($('#update-band-name').val() === "") || ($('#update-album-name').val() === "") ||
+        ($('#update-release-year').val() === "") || ($('#update-format').val() === "") ||
+        ($('#update-notes').val() === "")) {
+            let errorMessage = "Please fill out all fields";
+            $(".error-messaging").show().html(errorMessage);
+    } else {
+        $(".error-messaging").hide()
+        var updatedAlbumArray = $('.update-album-info').map(function() {
+            return $(this).val();
+        })
+        putUpdatedAlbum(updatedAlbumArray)
+    }
 });
 
 // watches for any clicks on cancel button
 $(document).on('click','.cancel-album',function(){
     $('.update-album-list').hide();
+    $(".error-messaging").hide();
+    getAlbumsFromSelectedBand($('.band-list').val())
 });
 
 // updates specific album info
@@ -295,7 +300,7 @@ function putUpdatedAlbum(updatedAlbumArray) {
         }),
         success: function(){
             getAlbumsFromSelectedBand(updatedAlbumArray[1])
-        },         
+        },
         error: function(e) {
             console.log(e);
         },

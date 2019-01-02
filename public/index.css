@@ -30,6 +30,10 @@ h1 {
   padding: 20px 0 0 0;
 }
 
+h2 {
+  padding: 0 0 20px 0;
+}
+
 .band-list-fieldset {
   margin: 15px 0;
   text-align: center;
@@ -81,6 +85,13 @@ legend {
   text-align: center;
 }
 
+.js-most-recent {
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 0 auto;
+  max-width: 1050px  
+}
+
 .error-messaging {
   display: none;
   color: red;
@@ -107,6 +118,7 @@ legend {
 
 .notes {
   width: 300px;  
+  text-align: left;
 }
 
 .remove-update-buttons {
@@ -138,6 +150,23 @@ legend {
 }
 
 @media only screen and (max-width: 1099px) {
+  h2 {
+    padding: 0 5px 15px;
+  }
+
+  .js-most-recent {
+    border: none;
+  }
+  
+  .band-list {
+    display: block;
+    margin: 10px auto 0;
+  }
+
+  .band-list-label {
+    padding: 0 10px;
+  } 
+
   .band-name {
     min-width: 200px;
     margin: 2px 0;
@@ -159,7 +188,7 @@ legend {
   }
   
   .notes {
-    min-width: 200px;  
+    min-width: 200px;
     margin: 2px 0;
   }
  

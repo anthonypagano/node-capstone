@@ -2,6 +2,7 @@
 
 const ALL_BANDS_LIST = '/bands';
 const ADD_AN_ALBUM = '/albums';
+const RECENT_UPDATES = '/recent';
 
 // initial call to /bands endpoint which returns
 // names of all bands in the db that I have an 
@@ -33,12 +34,6 @@ function getAndDisplayBandList() {
     getBandList(displayBandList);
 }
 
-// on page load call the api and load all band 
-// names from the db into the dropdown list
-$(function() {
-    getAndDisplayBandList();
-})
-
 // calls the get endpoint to get all the albums by 
 // the selected band name from the dropdown list
 function watchBandSelection() {
@@ -48,15 +43,52 @@ function watchBandSelection() {
     });
 }
 
-// watches for a selection from the band dropdown list
-$(document).ready(
-    watchBandSelection()
-);
+// initital load of recently updates albums upon landing on the app
+function getRecentUpdates(callback) {
+    const recentUpdates = {
+        url: RECENT_UPDATES,
+        dataType: 'json',
+        type: 'GET',
+        success: function(data) { 
+            let recentUpdateList = Object.values(data);
+            displayRecentUpdates(recentUpdateList); 
+        }
+    };
+ 
+    $.ajax(recentUpdates);
+}
+
+function getAndDisplayRecentUpdates() {
+    getRecentUpdates();
+}
+
+// takes list of 5 recently updated or added albums and maps 
+// results through displayRecentUpdates function to the page
+function displayRecentUpdates(data) {
+    const results = data.map((item, index) => renderRecentUpdates(item));
+    $('.js-most-recent').append($('<h2>Here are the 5 most recent updates to the collection</h2>'));
+    $('.js-most-recent').append(results);
+}
+
+// takes each album and displays the info 
+function renderRecentUpdates(result) {
+    return `
+        <section>
+        <ul>
+            <li class="band-name">${result.bandName}</li>
+            <li class="album-name">${result.albumName}</li>
+            <li class="release-year">${result.releaseYear}</li>
+            <li class="format">${result.format}</li>
+            <li class="notes">${result.notes}</li>         
+        </ul>
+        </section>
+    `;
+}
 
 // function to take selected band and hit end point to return
 // all albums from that band in the db
 function getAlbumsForDisplay(bandChosen) {
-    return `/band/${bandChosen}`;
+    return `/bands/${bandChosen}`;
 }
 
 // calls function to hit band specific album end point
@@ -121,11 +153,6 @@ function albumToDelete(albumToRemove) {
     $.ajax(deletedAlbums);
 }
 
-// watches for any clicks on Add New Album Toggle button
-$(document).ready(
-    watchAddAlbumToggleButton()
-);
-
 // function to toggle open and close the add new album form
 function watchAddAlbumToggleButton() {
     $('.add-new-album-toggle').click(event => {
@@ -157,11 +184,6 @@ function watchAddAlbumButton() {
         }
     });
 }
-
-// watches for any clicks on Add An Album button
-$(document).ready(
-    watchAddAlbumButton()
-);
 
 // posts new album info to db
 function postNewAlbum(newAlbumArray) {
@@ -281,3 +303,11 @@ function putUpdatedAlbum(updatedAlbumArray) {
         contentType: "application/json"
     });
 }
+
+$(function() {
+    getAndDisplayBandList();
+    getAndDisplayRecentUpdates();
+    watchBandSelection();
+    watchAddAlbumToggleButton();
+    watchAddAlbumButton();
+  });

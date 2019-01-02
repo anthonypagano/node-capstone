@@ -8,7 +8,7 @@ const albumSchema = mongoose.Schema({
   albumName: {type: String, required: true },
   releaseYear: {type: String, required: true },
   format: {type: String, required: true },
-  notes: {type: String, required: false },
+  notes: {type: String, required: true },
   dateAdded: {type: Date, default: Date.now }
 });
 

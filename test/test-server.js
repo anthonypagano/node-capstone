@@ -92,7 +92,7 @@ describe("Do I Have That Album app", function() {
         let res;
 
         return chai.request(app)
-          .get('/band/' + band)
+          .get('/bands/' + band)
           .then(_res => {
             res = _res;
             res.should.have.status(200);

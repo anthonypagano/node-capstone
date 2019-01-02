@@ -1,7 +1,6 @@
 language: node_js
 node_js: node
-services:
-- mongodb
+services: mongodb
 deploy:
   provider: heroku
   api_key:
@@ -10,5 +9,5 @@ deploy:
   on:
     repo: anthonypagano/node-capstone
 env:
-  - DATABASE_URL=mongodb://localhost/node-capstone
-  - TEST_DATABASE_URL=mongodb://localhost/node-capstone-test
+  DATABASE_URL=mongodb://localhost/node-capstone
+  TEST_DATABASE_URL=mongodb://localhost/node-capstone-test

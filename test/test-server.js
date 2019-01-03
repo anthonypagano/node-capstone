@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const {Album} = require('../models');
 const {app, runServer, closeServer} = require('../server');
 const {TEST_DATABASE_URL} = require('../config');
-require('dotenv').config();
 const expect = chai.should();
 
 chai.use(chaiHttp);

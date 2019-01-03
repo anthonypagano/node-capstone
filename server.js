@@ -13,7 +13,6 @@ const albumsRouter = require('./albumsRouter');
 const recentRouter = require('./recentRouter');
 
 app.use(morgan('common'));
-require('dotenv').config();
 app.use(express.json());
 
 app.use(express.static('public'));

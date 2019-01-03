@@ -83,6 +83,11 @@ legend {
 .add-new-album-toggle {
   margin: 15px 0 0 0;
   font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid white;
+  color: white;
+  background-color: orange;
 }
 
 .add-album-fieldset {
@@ -99,6 +104,11 @@ legend {
 .js-add-album-button{
   margin: 0 0 15px 0;
   font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid white;
+  color: white;
+  background-color: orange;
 }
 
 .js-search-results {
@@ -140,12 +150,23 @@ legend {
   min-width: 75px;
 }
 
-.remove-album, .update-album, .save-album, .cancel-album, .band-list {
+.remove-album, .update-album, .save-album, .cancel-album {
   font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid white;
+  color: white;
+  background-color: orange;
+}
+
+.band-list {
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .update-album-list {
-  margin-left: -29px;
+  margin-left: -21px;
 }
 
 #update-album-name, #update-band-name {

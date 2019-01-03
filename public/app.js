@@ -66,7 +66,7 @@ function getAndDisplayRecentUpdates() {
 // results through displayRecentUpdates function to the page
 function displayRecentUpdates(data) {
     const results = data.map((item, index) => renderRecentUpdates(item));
-    $('.js-most-recent').append($('<h2>Here are the 5 most recent updates to the collection</h2>'));
+    $('.js-most-recent').append($('<h2>Here are the 5 most recent additions to the collection</h2>'));
     $('.js-most-recent').append(results);
 }
 

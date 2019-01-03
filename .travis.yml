@@ -10,5 +10,5 @@ deploy:
   on:
     repo: anthonypagano/node-capstone
 env:
-  - DATABASE_URL=mongodb://localhost/node-capstone
-  - TEST_DATABASE_URL=mongodb://localhost/node-capstone-test
+  - DATABASE_URL=mongodb://localhost:27017/node-capstone
+  - TEST_DATABASE_URL=mongodb://localhost:27017/node-capstone-test

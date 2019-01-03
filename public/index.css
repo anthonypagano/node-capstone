@@ -4,14 +4,22 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
+  margin: 0;
   font-family: sans-serif;
   font-size: 16px;
+  color: #000000;
+  background-image: linear-gradient(to left top, #f3eeee, #f3eeee, #f3eeee, #f3eeee, #f3eeee, #ede8e8, #e6e2e2, #e0dcdc, #d2cece, #c5c1c1, #b7b3b3, #aaa6a6);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-  color: #000000;
 }
 
 header {
@@ -30,6 +38,15 @@ h1 {
   padding: 20px 0 0 0;
 }
 
+h1 a {
+  text-decoration: none;
+  color: black;
+}
+
+h1 a:hover {
+  text-decoration: underline;
+}
+
 h2 {
   padding: 0 0 20px 0;
 }
@@ -40,16 +57,17 @@ h2 {
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 li {
-    display: inline-flex;
-    margin: 0 0 5px 0;
+  display: inline-flex;
+  margin: 0 0 5px 0;
 }
+
 main {
   width: 100%;
  }
@@ -64,6 +82,7 @@ legend {
 
 .add-new-album-toggle {
   margin: 15px 0 0 0;
+  font-size: 16px;
 }
 
 .add-album-fieldset {
@@ -74,10 +93,12 @@ legend {
 
 .newAlbumInfo {
   margin: 0 0 10px 0;
+  font-size: 16px;
 }
 
 .js-add-album-button{
-  margin: 0 0 15px 0;  
+  margin: 0 0 15px 0;
+  font-size: 16px;
 }
 
 .js-search-results {
@@ -89,7 +110,7 @@ legend {
   border: 1px solid black;
   border-radius: 10px;
   margin: 0 auto;
-  max-width: 1050px  
+  max-width: 1050px;
 }
 
 .error-messaging {
@@ -97,56 +118,59 @@ legend {
   color: red;
   font-weight: bold;
   text-align: center;
-  margin-top: 20px;
+  margin: 0 0 20px 0;
 }
 
-.band-name {
+.album-name, .band-name {
   width: 200px;
+  text-align: left;
 }
 
-.album-name {
-  width: 200px;  
-}
-
-.format {
-  width: 100px;  
-}
-
-.release-year {
-  width: 100px;    
+.format, .release-year {
+  width: 100px;
+  text-align: left;
 }
 
 .notes {
-  width: 300px;  
+  width: 300px;
   text-align: left;
 }
 
 .remove-update-buttons {
-  min-width: 75px;  
+  min-width: 75px;
+}
+
+.remove-album, .update-album, .save-album, .cancel-album, .band-list {
+  font-size: 16px;
 }
 
 .update-album-list {
-  margin-left: -35px;
+  margin-left: -29px;
 }
 
-#update-band-name {
+#update-album-name, #update-band-name {
   min-width: 200px;
+  font-size: 16px;
 }
 
-#update-album-name {
-  min-width: 200px;  
-}
-
-#update-format {
-  width: 100px;  
-}
-
-#update-release-year {
-  width: 100px;    
+#update-format, #update-release-year {
+  width: 100px;
+  font-size: 16px;
 }
 
 #update-notes {
-  min-width: 300px;  
+  min-width: 300px;
+  font-size: 16px;
+}
+
+.record-store {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.record-store img {
+  border-radius: 15px;
 }
 
 @media only screen and (max-width: 1099px) {
@@ -163,57 +187,50 @@ legend {
     margin: 10px auto 0;
   }
 
-  .band-list-label {
+  .band-list-label, .intro-copy {
     padding: 0 10px;
-  } 
+    text-align: center;
+  }
 
-  .band-name {
+  .album-name, .band-name, .notes {
     min-width: 200px;
     margin: 2px 0;
+    padding-right: 10px;
   }
   
-  .album-name {
-    min-width: 200px;  
+  .format, .release-year {
+    min-width: 100px;
     margin: 2px 0;
+    padding-right: 10px;    
   }
-  
-  .format {
-    min-width: 100px;  
-    margin: 2px 0;
-  }
-  
-  .release-year {
-    min-width: 100px;    
-    margin: 2px 0;
-  }
-  
-  .notes {
-    min-width: 200px;
-    margin: 2px 0;
-  }
- 
+   
   #update-notes {
-    min-width: 200px;  
+    min-width: 200px;
   }
+  
   ul {
-      list-style-type: none;
-      margin: 0 auto 10px;
-      padding: 10px;
-      width: 300px;
-      border: 1px solid black;
-      border-radius: 11px;
+    list-style-type: none;
+    margin: 0 auto 10px;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 11px;
   }
     
   li {
-        display: block;
-        margin: 0 auto 5px auto;
-        text-align: left;
-        width: 300px;      
-      }
+    display: block;
+    margin: 0 auto 5px auto;
+    text-align: left;
+    width: 300px;
+  }
 
   .update-album-list {
     border: 0;
     margin-left: 0;
     padding: 10px 0;
   }
+
+  .record-store img {
+    width: 80%;
+  }  
 }

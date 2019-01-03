@@ -169,8 +169,7 @@ function watchAddAlbumButton() {
         if (($('#bandName').val() === "") || ($('#albumName').val() === "") ||
             ($('#releaseYear').val() === "") || ($('#format').val() === "") ||
             ($('#notes').val() === "")) {
-                let errorMessage = "Please fill out all fields";
-                $(".error-messaging").show().html(errorMessage);
+                $(".error-messaging").show();
         } else {
             $(".error-messaging").hide()
             var newAlbumArray = $('.newAlbumInfo').map(function() {
@@ -250,11 +249,11 @@ function renderAlbum(result) {
     return `
         <ul class="update-album-list">
             <input type="hidden" class="update-album-info" value="${result[0]}" />
-            <li><input type="text" class="update-album-info" id="update-band-name" value="${result[1]}"/></li>
-            <li><input type="text" class="update-album-info" id="update-album-name" value="${result[2]}"/></li>
-            <li><input type="text" class="update-album-info" id="update-release-year" value="${result[3]}"/></li>
-            <li><input type="text" class="update-album-info" id="update-format" value="${result[4]}"/></li>
-            <li><input type="text" class="update-album-info" id="update-notes" value="${result[5]}"/></li>
+            <li><input type="text" class="update-album-info" id="update-band-name" value="${result[1]}" aria-label="update band name input" /></li>
+            <li><input type="text" class="update-album-info" id="update-album-name" value="${result[2]}" aria-label="update album name input" /></li>
+            <li><input type="text" class="update-album-info" id="update-release-year" value="${result[3]}" aria-label="update release year input" /></li>
+            <li><input type="text" class="update-album-info" id="update-format" value="${result[4]}" aria-label="update format input" /></li>
+            <li><input type="text" class="update-album-info" id="update-notes" value="${result[5]}" aria-label="update notes input"/></li>
             <li class="save-button"><button class="save-album" value="${result[0]}">Save</button></li>
             <li class="cancel-button"><button class="cancel-album" value="${result[0]}">Cancel</button></li>
         </ul>
@@ -267,8 +266,7 @@ $(document).on('click','.save-album',function(){
     if (($('#update-band-name').val() === "") || ($('#update-album-name').val() === "") ||
         ($('#update-release-year').val() === "") || ($('#update-format').val() === "") ||
         ($('#update-notes').val() === "")) {
-            let errorMessage = "Please fill out all fields";
-            $(".error-messaging").show().html(errorMessage);
+            $(".error-messaging").show();
     } else {
         $(".error-messaging").hide()
         var updatedAlbumArray = $('.update-album-info').map(function() {

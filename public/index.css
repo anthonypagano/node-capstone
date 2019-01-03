@@ -195,11 +195,13 @@ legend {
   .album-name, .band-name, .notes {
     min-width: 200px;
     margin: 2px 0;
+    padding-right: 10px;
   }
   
   .format, .release-year {
     min-width: 100px;
     margin: 2px 0;
+    padding-right: 10px;    
   }
    
   #update-notes {

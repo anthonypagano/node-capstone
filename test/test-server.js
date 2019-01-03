@@ -10,9 +10,36 @@ const expect = chai.should();
 
 chai.use(chaiHttp);
 
+function seedEntryData() {
+  console.info('seeding album data');
+  const seedData = [
+    { bandName: "Kiss", albumName: "Hotter Than Hell", releaseYear: "1974", format: "8 track", notes: "second album from the same year"},    
+    { bandName: "Van Halen", albumName: "1984", releaseYear: "1984", format: "vinyl", notes: "biggest but last tour with original lineup"},
+    { bandName: "Judas Priest", albumName: "Turbo", releaseYear: "1986", format: "cassette", notes: "No explanation needed"},
+    { bandName: "Metallica", albumName: "Ride The Lightning", releaseYear: "1984", format: "cassette", notes: "Picking up steam overseas too at this point"},
+    { bandName: "Iron Maiden", albumName: "Number Of The Beast", releaseYear: "1982", format: "cassette", notes: "Major US breakthrough"},
+    { bandName: "Black Sabbath", albumName: "Paranoid", releaseYear: "1971", format: "vinyl", notes: "two albums in the same year"},              
+  ];
+
+  return Album.insertMany(seedData);
+}
+
+function tearDownDb() {
+  console.warn('Deleting database');
+  return mongoose.connection.dropDatabase();
+}
+
 describe("Do I Have That Album app", function() {
   before(function() {
     return runServer(TEST_DATABASE_URL);
+  });
+
+  beforeEach(function () {
+    return seedEntryData();
+  });
+
+  afterEach(function () {
+    return tearDownDb();
   });
 
   after(function() {
